@@ -1,0 +1,14 @@
+B:\Ethan\Documents\ld36\Temp\bin\Debug\Assembly-CSharp.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\Assembly-CSharp.pdb
+B:\Ethan\Documents\ld36\Temp\bin\Debug\UnityEditor.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\UnityEditor.iOS.Extensions.Xcode.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\UnityEngine.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\UnityEngine.UI.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\Mono.Cecil.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\Unity.SerializationLogic.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\Unity.DataContract.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\ICSharpCode.NRefactory.dll
+B:\Ethan\Documents\ld36\Temp\bin\Debug\Unity.CecilTools.dll
+B:\Ethan\Documents\ld36\obj\Debug\Assembly-CSharp-vs.csprojResolveAssemblyReference.cache
+B:\Ethan\Documents\ld36\obj\Debug\Assembly-CSharp.dll
+B:\Ethan\Documents\ld36\obj\Debug\Assembly-CSharp.pdb
