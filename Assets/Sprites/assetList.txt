@@ -1,0 +1,9 @@
+- Ship
+- Water
+- Ballista which is seperate from ship
+- arrow/ammo for ballista
+- Flaming rock
+- rocks for in water
+- splash screen
+- Buttons/UI elements ie start button, return button quit button
+- info button to include an image of our site
