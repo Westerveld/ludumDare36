@@ -8,8 +8,8 @@ public class PlayerScript : MonoBehaviour {
     public Transform shotLoc;
     public GameObject bulletPrefab;
     public Vector3 minBounds, maxBounds;
-    private bool dead;
-    private bool respawning;
+
+
 
 	// Use this for initialization
 	void Start () {
@@ -87,11 +87,10 @@ public class PlayerScript : MonoBehaviour {
         rot.z = 180;
         gameObject.transform.rotation = rot;
         gameObject.transform.position = pos;
-        dead = false;
-        respawning = false;
+
     }
 
-    void OnCollisionEnter2D(Collision2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "enemy")
         {

@@ -1,30 +1,43 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class bulletScript : MonoBehaviour {
+public class bulletScript : MonoBehaviour
+{
 
-    public float startTime, endTime, currTime;
-	// Use this for initialization
-	void Start () {
+    public float startTime, endTime, currTime, maxX,maxY;
+    // Use this for initialization
+    void Start()
+    {
         gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(transform.forward * 1000);
         startTime = Time.time;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         currTime = Time.time;
         if (currTime - startTime > endTime)
         {
             Destroy(gameObject);
         }
-	}
-
-    void OnCollisionEnter2D(Collision2D col)
-    {
-        if (col.gameObject.tag == "enemy")
+        var pos = transform.position;
+        if (pos.y > maxY)
         {
-            Destroy(col.gameObject);
-            Destroy(gameObject);
+            pos.y = -maxY;
         }
+        if (pos.y < -maxY)
+        {
+            pos.y = maxY;
+        }
+        if (pos.x > maxX)
+        {
+            pos.x = -maxX;
+        }
+        if (pos.x < -maxX)
+        {
+            pos.x = maxX;
+        }
+        transform.position = pos;
     }
+
 }
