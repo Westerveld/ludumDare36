@@ -1,4 +1,4 @@
 sceneSetups:
-- path: Assets/axeea.unity
+- path: Assets/Scenes/axeea.unity
   isLoaded: 1
   isActive: 1

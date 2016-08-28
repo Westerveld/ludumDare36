@@ -12,6 +12,7 @@ public class debryScript : MonoBehaviour {
 	void Start () {
         rigid = gameObject.GetComponent<Rigidbody2D>();
         rigid.velocity = new Vector2(Random.Range(-speed, speed), Random.Range(-speed, speed));
+        rigid.AddTorque(Random.Range(-1f, 1f) * 360f);
 
         GM.SpawnedDebries++;
 	}
@@ -49,6 +50,16 @@ public class debryScript : MonoBehaviour {
                 Instantiate(newDebry, transform.position, Quaternion.identity);
             }
             Destroy(col.gameObject);
+            Destroy(gameObject);
+        }
+        if (col.gameObject.tag == "Player")
+        {
+            GM.SpawnedDebries--;
+            GM.PlayerLives--;
+            for (int i = 0; i < debryInt; i++)
+            {
+                Instantiate(newDebry, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
         }
     }

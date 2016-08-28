@@ -12,8 +12,9 @@ public class GameManager : MonoBehaviour {
     private int spawnedDebries;
     public int SpawnedDebries { get { return spawnedDebries; } set { spawnedDebries = value; } }
 
+    public Transform[] spawnLocs;
     public GameObject DebryStarterPrefab;
-    public float maxX, maxY, currTime, nextSpawn, lastTime;
+    public float maxX, maxY, currTime, nextSpawn, lastTime, maxDebry,currDebry;
 	// Use this for initialization
 	void Start () {
         Score = 0;
@@ -23,10 +24,11 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        currDebry = SpawnedDebries;
         currTime = Time.time;
         if (lastTime + nextSpawn < currTime)
         {
-            if (SpawnedDebries < 4)
+            if (currDebry < maxDebry)
             {
                 SpawnDebry();
                 lastTime = Time.time;
@@ -36,7 +38,8 @@ public class GameManager : MonoBehaviour {
 
     void SpawnDebry()
     {
-        Vector2 spawnLoc = new Vector2(Random.Range(-maxX, maxX), Random.Range(-maxY, maxY));
-        Instantiate(DebryStarterPrefab, spawnLoc, Quaternion.identity);
+        int loc = Random.Range(0, spawnLocs.Length);
+        Instantiate(DebryStarterPrefab, spawnLocs[loc].position, Quaternion.identity);
+        SpawnedDebries++;
     }
 }

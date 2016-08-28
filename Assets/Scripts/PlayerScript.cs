@@ -8,12 +8,14 @@ public class PlayerScript : MonoBehaviour {
     public Transform shotLoc;
     public GameObject bulletPrefab;
     public Vector3 minBounds, maxBounds;
-
+    public bool isMoving;
+    private Animator anim;
 
 
 	// Use this for initialization
 	void Start () {
-       rigid = gameObject.GetComponent<Rigidbody2D>();	
+        rigid = gameObject.GetComponent<Rigidbody2D>();
+        anim = gameObject.GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -31,8 +33,14 @@ public class PlayerScript : MonoBehaviour {
         
         if (boost != 0 || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            rigid.AddForce(transform.up * -moveSpeed, ForceMode2D.Force);
+            rigid.AddForce(transform.up * moveSpeed, ForceMode2D.Force);
+            anim.SetBool("isMoving", true);
         }
+        else
+        {
+            anim.SetBool("isMoving", false);
+        }
+
         if (pos.y > maxY)
         {
             pos.y = -maxY;
@@ -79,6 +87,8 @@ public class PlayerScript : MonoBehaviour {
     void Respawn()
     {
         Debug.Log("respawning");
+        var animat = gameObject.GetComponent<Animator>();
+        animat.SetBool("isDead", false);
         gameObject.SetActive(true);
         var pos = gameObject.transform.position;
         pos.x = 0;
@@ -94,9 +104,21 @@ public class PlayerScript : MonoBehaviour {
     {
         if (col.gameObject.tag == "enemy")
         {
+            var animat = gameObject.GetComponent<Animator>();
+            animat.SetBool("isDead", true);
+            WaitForAnim();
             gameObject.SetActive(false);
             Invoke("Respawn", 1.5f);
 
         }
+    }
+
+    private IEnumerator WaitForAnim()
+    {
+        do
+        {
+            yield return null;
+        }
+        while (anim.GetBool("isDead"));
     }
 }
