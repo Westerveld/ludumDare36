@@ -1,0 +1,52 @@
+
+skeleton.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ballista
+  rotate: false
+  xy: 2, 2
+  size: 162, 122
+  orig: 162, 122
+  offset: 0, 0
+  index: -1
+
+skeleton2.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Ship
+  rotate: false
+  xy: 2, 2
+  size: 119, 888
+  orig: 119, 888
+  offset: 0, 0
+  index: -1
+
+skeleton3.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+oars
+  rotate: false
+  xy: 2, 2
+  size: 17, 191
+  orig: 17, 191
+  offset: 0, 0
+  index: -1
+
+skeleton4.png
+size: 1024,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+sails
+  rotate: false
+  xy: 2, 2
+  size: 669, 158
+  orig: 669, 158
+  offset: 0, 0
+  index: -1
