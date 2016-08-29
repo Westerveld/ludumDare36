@@ -10,39 +10,49 @@ public class GameManager : MonoBehaviour {
     public GameObject[] lives;
 
     public Text scoreText;
-    private int score;
+    public int Score;
 
-    private int spawnedDebries;
+    public int SpawnedDebry;
+
+    public bool isDead;
+    public AudioSource audi;
+    public AudioSource aud;
 
     public Transform[] spawnLocs;
-    public GameObject DebryStarterPrefab;
-    public float maxX, maxY, currTime, nextSpawn, lastTime, maxDebry,currDebry,currScore;
+    public GameObject DebryStarterPrefab, ShipPrefab;
+    public float maxX, maxY, currTime, nextSpawn, lastTime, maxDebry,currDebry,currScore, shipSpawn,shipCount, nextIncrease, allowedShips;
 	// Use this for initialization
 	void Start () {
-        score = 0;
+        Score = 0;
         PlayerLives = 3;
-        spawnedDebries = 0;
+        SpawnedDebry = 0;
+        StartCoroutine(FadeIn());
+        PlayerPrefs.SetInt("Score", 0);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        currScore = score;
-        currDebry = spawnedDebries;
         currTime = Time.time;
         if (lastTime + nextSpawn < currTime)
         {
-            if (currDebry < maxDebry)
+            if (SpawnedDebry < maxDebry)
             {
                 SpawnDebry();
                 lastTime = Time.time;
             }
         }
         updateLives();
-        scoreText.text = "Score: " + currScore;
+        scoreText.text = "Score: " + Score;
 
         if (playerLives == 0)
         {
+            PlayerPrefs.SetInt("Score", Score);
             StartCoroutine(loadStart("end"));
+        }
+
+        if (shipCount < allowedShips)
+        {
+            SpawnShip();
         }
      }
 
@@ -50,6 +60,12 @@ public class GameManager : MonoBehaviour {
     {
         int loc = Random.Range(0, spawnLocs.Length);
         Instantiate(DebryStarterPrefab, spawnLocs[loc].position, Quaternion.identity);
+    }
+
+    void SpawnShip()
+    {
+        int loc = Random.Range(0, spawnLocs.Length);
+        Instantiate(ShipPrefab, spawnLocs[loc].position, Quaternion.identity);
     }
 
     public void updateLives()
@@ -74,26 +90,31 @@ public class GameManager : MonoBehaviour {
 
     }
 
-    public void AddScore(int value)
-    {
-        score += value;
-    }
-
-    public void AddDebry(int value)
-    {
-        spawnedDebries += value;
-    }
-
-    public void RemoveDebry(int value)
-    {
-        spawnedDebries -= value;
-    }
-
     private IEnumerator loadStart(string level)
     {
+        while (audi.volume > 0.1f)
+        {
+            audi.volume -= 0.1f;
+            yield return new WaitForSeconds(0.05f);
+        }
         float fadeTime = GameObject.Find("GM").GetComponent<FadeOut>().BeginFade(1);
+
         yield return new WaitForSeconds(fadeTime);
+        
         Application.LoadLevel(level);
     }
 
+    private IEnumerator FadeIn()
+    {
+        while (audi.volume < 0.7f)
+        {
+            audi.volume += 0.1f;
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    public void PlayHit()
+    {
+        aud.Play();
+    }
 }

@@ -11,11 +11,15 @@ public class PlayerScript : MonoBehaviour {
     public bool isMoving;
     private Animator anim;
     public GameManager GM;
+    private AudioSource audi;
+
+    public AudioSource aud;
 
 	// Use this for initialization
 	void Start () {
         rigid = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
+        audi = gameObject.GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -78,6 +82,7 @@ public class PlayerScript : MonoBehaviour {
             Vector2 dir = target - mypos;
             dir.Normalize();
 
+            audi.Play();
             GameObject bullet = (GameObject)Instantiate(bulletPrefab, shotLoc.position, shotLoc.rotation);
             bullet.gameObject.GetComponent<Rigidbody2D>().velocity = shotSpeed * -dir;
             lastShotTime = Time.time;
@@ -89,6 +94,7 @@ public class PlayerScript : MonoBehaviour {
         Debug.Log("respawning");
         var animat = gameObject.GetComponent<Animator>();
         animat.SetBool("isDead", false);
+        GM.isDead = false;
         gameObject.SetActive(true);
         var pos = gameObject.transform.position;
         pos.x = 0;
@@ -104,13 +110,15 @@ public class PlayerScript : MonoBehaviour {
     {
         if (col.gameObject.tag == "enemy")
         {
+            aud.Play();
             var animat = gameObject.GetComponent<Animator>();
             animat.SetBool("isDead", true);
+            GM.isDead = true;
             GM.PlayerLives = GM.PlayerLives - 1;
             WaitForAnim();
             gameObject.SetActive(false);
             Invoke("Respawn", 1.5f);
-
+            
         }
     }
 

@@ -3,12 +3,11 @@ using System.Collections;
 
 public class bulletScript : MonoBehaviour
 {
-
-    public float startTime, endTime, currTime, maxX,maxY;
+    public float startTime, endTime, currTime, maxX, maxY;
     // Use this for initialization
     void Start()
     {
-        gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(transform.forward * 1000);
+        //gameObject.GetComponent<Rigidbody2D>().AddRelativeForce(transform.forward * 1000);
         startTime = Time.time;
     }
 

@@ -4,8 +4,12 @@ using System.Collections;
 public class debryScript : MonoBehaviour {
 
     public GameObject newDebry;
-    public GameManager GM;
+    private GameManager GM;
     private Rigidbody2D rigid;
+
+
+    public Transform target;
+
     public int debryInt;
     public float maxX, maxY,speed;
     // Use this for initialization
@@ -13,8 +17,8 @@ public class debryScript : MonoBehaviour {
         rigid = gameObject.GetComponent<Rigidbody2D>();
         rigid.velocity = new Vector2(Random.Range(-speed, speed), Random.Range(-speed, speed));
         rigid.AddTorque(Random.Range(-1f, 1f) * 360f);
-
-        GM.AddDebry(1);
+        GM = GameObject.Find("GM").GetComponent<GameManager>();
+        GM.SpawnedDebry++;
 	}
 	
 	// Update is called once per frame
@@ -37,14 +41,20 @@ public class debryScript : MonoBehaviour {
             pos.x = maxX;
         }
         transform.position = pos;
+
+        if (pos.x > -1 && pos.x < 1 && pos.y > -1 && pos.y < 1 && GM.isDead == true)
+        {
+            Destroy(gameObject);
+        }
 	}
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "bullet")
         {
-            GM.RemoveDebry(1);
-            GM.AddScore(10);
+            GM.PlayHit();
+            GM.SpawnedDebry--;
+            GM.Score += 10;
             for (int i = 0; i < debryInt; i++)
             {
                 Instantiate(newDebry, transform.position, Quaternion.identity);
@@ -54,7 +64,8 @@ public class debryScript : MonoBehaviour {
         }
         if (col.gameObject.tag == "Player")
         {
-            GM.RemoveDebry(1);
+            GM.PlayHit();
+            GM.SpawnedDebry--;
             for (int i = 0; i < debryInt; i++)
             {
                 Instantiate(newDebry, transform.position, Quaternion.identity);
