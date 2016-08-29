@@ -10,7 +10,7 @@ public class PlayerScript : MonoBehaviour {
     public Vector3 minBounds, maxBounds;
     public bool isMoving;
     private Animator anim;
-
+    public GameManager GM;
 
 	// Use this for initialization
 	void Start () {
@@ -78,7 +78,7 @@ public class PlayerScript : MonoBehaviour {
             Vector2 dir = target - mypos;
             dir.Normalize();
 
-            GameObject bullet = (GameObject)Instantiate(bulletPrefab, shotLoc.position, Quaternion.identity);
+            GameObject bullet = (GameObject)Instantiate(bulletPrefab, shotLoc.position, shotLoc.rotation);
             bullet.gameObject.GetComponent<Rigidbody2D>().velocity = shotSpeed * -dir;
             lastShotTime = Time.time;
         }
@@ -106,6 +106,7 @@ public class PlayerScript : MonoBehaviour {
         {
             var animat = gameObject.GetComponent<Animator>();
             animat.SetBool("isDead", true);
+            GM.PlayerLives = GM.PlayerLives - 1;
             WaitForAnim();
             gameObject.SetActive(false);
             Invoke("Respawn", 1.5f);

@@ -14,7 +14,7 @@ public class debryScript : MonoBehaviour {
         rigid.velocity = new Vector2(Random.Range(-speed, speed), Random.Range(-speed, speed));
         rigid.AddTorque(Random.Range(-1f, 1f) * 360f);
 
-        GM.SpawnedDebries++;
+        GM.AddDebry(1);
 	}
 	
 	// Update is called once per frame
@@ -43,8 +43,8 @@ public class debryScript : MonoBehaviour {
     {
         if (col.gameObject.tag == "bullet")
         {
-            GM.SpawnedDebries--;
-            GM.Score++;
+            GM.RemoveDebry(1);
+            GM.AddScore(10);
             for (int i = 0; i < debryInt; i++)
             {
                 Instantiate(newDebry, transform.position, Quaternion.identity);
@@ -54,8 +54,7 @@ public class debryScript : MonoBehaviour {
         }
         if (col.gameObject.tag == "Player")
         {
-            GM.SpawnedDebries--;
-            GM.PlayerLives--;
+            GM.RemoveDebry(1);
             for (int i = 0; i < debryInt; i++)
             {
                 Instantiate(newDebry, transform.position, Quaternion.identity);
